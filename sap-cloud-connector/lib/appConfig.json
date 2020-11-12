@@ -1,0 +1,9 @@
+{
+    "env" : {
+        "account" : "<AWS Account ID>",
+        "region" : "<AWS Region>"
+    },
+    "vpcid" : "<AWS VPC ID>",
+    "vpccidr" : "<AWS VPC CIDR>",
+    "subnetName" : "Private",
+}
