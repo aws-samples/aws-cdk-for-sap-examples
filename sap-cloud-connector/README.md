@@ -7,9 +7,9 @@ This an example to deploy SAP Connector on SUSE Linux 15 SP2. This example requi
 Before deploying the SAP Cloud Connector, you must first edit `/lib/appConfig.json` with information on your AWS account.
 
 ```bash
-npm install -g aws-cdk
+git clone https://github.com/aws-samples/aws-cdk-for-sap-examples.git
+cd aws-cdk-for-sap-examples/sap-cloud-connector
 npm install
-npm run build
 ```
 This will install the necessary CDK, then this example's dependencies, and then build your TypeScript files and your CloudFormation template.
 
