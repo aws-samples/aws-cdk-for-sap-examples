@@ -45,6 +45,12 @@ function downloads_sap_software(){
 
 }
 
+function install_scc(){
+    unzip sapcc-2.12.5-linux-x64.zip 
+    rpm -i sapjvm-8.1.066-linux-x64.rpm 
+    rpm -i com.sap.scc-ui-2.12.5-4.x86_64.rpm
+}
+
 function setup_cert(){
     secpassword=$( /opt/sapjvm_8/bin/java -cp /opt/sap/scc/plugins/com.sap.scc.rt*.jar -Djava.library.path=/opt/sap/scc/auditor com.sap.scc.jni.SecStoreAccess -path /opt/sap/scc/scc_config -p | cut -c 17-32)
 
@@ -62,12 +68,6 @@ function setup_cert(){
 
     systemctl restart scc_daemon
 
-}
-
-function install_scc(){
-    unzip sapcc-2.12.5-linux-x64.zip 
-    rpm -i sapjvm-8.1.066-linux-x64.rpm 
-    rpm -i com.sap.scc-ui-2.12.5-4.x86_64.rpm
 }
 
 ################ End of Functions ################ 
