@@ -67,6 +67,7 @@ export class CdkSapccStack extends cdk.Stack {
       resources: ['*'],
     }));
 
+    const scriptLocation = new cdk.CfnOutput(this, 'Script S3 location', { value: (s3bucket.bucketName )});
     const command1 = "aws s3 cp s3://" + scriptLocation.value + "/bootstrap.sh /root/install/";   
     const command2 = "aws s3 cp s3://" + scriptLocation.value + "/default-server.xml /root/install/";  
 
