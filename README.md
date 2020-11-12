@@ -1,4 +1,4 @@
-# AWS CDK Examples for SAP applications deployment.  
+# AWS CDK Examples for SAP  
 
 This repository contains a set of example projects for SAP applications. All examples are available in TypeScript.
 
