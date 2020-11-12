@@ -1,6 +1,6 @@
 # Welcome to the CDK TypeScript project for SAP cloud connector!
 
-This an example of an to deploy SAP Connector on SUSE Linux 15 SP2. This example requires an existing VPC in your AWS account. 
+This an example to deploy SAP Connector on SUSE Linux 15 SP2. This example requires an existing VPC in your AWS account. 
 
 ## Build
 
