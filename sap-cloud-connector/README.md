@@ -24,3 +24,4 @@ After the deployment you will see the EC2 private IP address, which represents t
 
 ## Appendix 
 Supported region include us-east-1, us-east-2, us-west-1, us-west-2,eu-west-1 and eu-central-1. 
+SAP blog post - [Deploy SAP Cloud Connector on AWS using SAP Business Application Studio](https://blogs.sap.com/2020/11/13/deploy-sap-cloud-connector-on-aws-using-sap-business-application-studio/)
