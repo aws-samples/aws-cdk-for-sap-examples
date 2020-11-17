@@ -1,7 +1,7 @@
 ## Welcome to CDK TypeScript project for SAP Commerce!
 
 ### Overview
-This repository contains examples of how to deploy a SAP Commerce system on Amazon Elastic Kubernetes Service(EKS) using AWS Cloud Development Kit (CDK). This is not design for production usage. 
+This repository contains examples of how to deploy a SAP Commerce system on Amazon Elastic Kubernetes Service(EKS) using AWS Cloud Development Kit (CDK). This is not design for production usage. The code creates a new VPC for the Aurora RDS and EKS.
 
 To deploy SAP Commerce:
 
