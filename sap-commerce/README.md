@@ -10,6 +10,8 @@ Prerequisites
 1. Download the SAP Commerce software and place in an Amazon S3 bucket
 2. Containerize SAP Commerce. You can refer to the SAP commerce repository in the [ AWS sample GitHub](https://github.com/aws-samples/aws-cloudformation-sap-commerce ) to automate this. Just select the option to create Docker image and this will automatically upload an image to Amazon Elastic Container Registry (ECR).
 
+Go to the sap-commerce directory and run the command block below.
+
 ```
 $ npm -g install typescript
 $ npm install @aws-cdk/core @aws-cdk/aws-ec2 @aws-cdk/aws-iam @aws-cdk/aws-eks 
