@@ -25,3 +25,6 @@ $ cdk destroy
 # License
 
 This library is licensed under the MIT-0 License. See the LICENSE file.
+
+# Appendix 
+SAP on AWS blog post - [Kubernetes and the path to cloud native application – An example with SAP Commerce](https://aws.amazon.com/blogs/awsforsap/kubernetes-and-the-path-to-cloud-native-application-an-example-with-sap-commerce/)
