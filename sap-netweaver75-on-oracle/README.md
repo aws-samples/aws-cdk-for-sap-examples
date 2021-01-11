@@ -31,6 +31,8 @@ Update the appCongig.json in the lib folder. The information required here is th
 ### Update bootstrap.sh 
 This is where you need to put in the S3 folder created in step 1 with all the binaries. In addition, you can customise the deployment such as the Oracle SID and hostname of the server. By default, this is set to OR1. If this is your first automated deployment, please use the default SID of DEV for SAP, and OR1 for Oracle. Once this is successful, then you can customise it further. 
 
+![bootstrap](image/bootstrap.png)
+
 This deployment is based on the unattended mode of the SAP Software Provisioning Manager. This means that, after inserting the required parameters into a parameter-file and providing the file to SAPinst executable. Please refer to [SAP Note 2230669](https://launchpad.support.sap.com/#/notes/2230669) for further information. 
 
 ### Update inifile.params (Optional)
