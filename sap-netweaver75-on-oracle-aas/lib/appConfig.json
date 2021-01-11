@@ -1,0 +1,12 @@
+{
+    "env" : {
+        "account" : "<AWS Account ID>",
+        "region" : "<AWS region>"
+    },
+    "vpcid" : "<AWS VPC ID>",
+    "subnetName" : "Private",
+    "sshKeyName" : "< AWS SSH Key>",
+    "pasHostName" : "<hostname of PAS>",
+    "pasIPAddress" : "<IP Address of PAS>",
+    "efsHostName" : "<EFS hostname>"
+}

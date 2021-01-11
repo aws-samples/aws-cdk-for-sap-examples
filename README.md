@@ -6,6 +6,7 @@ This repository contains a set of example projects for SAP applications. All exa
 1. SAP Cloud Connector 
 2. SAP Commerce 
 3. SAP Netweaver 7.5 on Oracle database
+4. SAP Netweaver 7.5 on Oracle database (Additional Application Servers)
 
 ## Security
 
