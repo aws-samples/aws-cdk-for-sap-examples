@@ -1,6 +1,6 @@
 # SAP Netweaver 7.5 on Oracle Database installation using AWS CDK
 
-This is an example of how to use **AWS Cloud Development Kit (AWS CDK)** to automatically deploys an SAP NetWeaver 7.5 for ABAP on the AWS using Oracle Database 19. The operating system is based on Oracle Linux 8.
+This is an example of how to use **AWS Cloud Development Kit (AWS CDK)** to automatically deploy an SAP NetWeaver 7.5 for ABAP on the AWS using Oracle Database 19. The operating system is based on Oracle Linux 8.
 
 This deploys an SAP standard installation only within a virtual private cloud (VPC) in your AWS account. 
 
