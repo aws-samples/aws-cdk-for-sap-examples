@@ -96,6 +96,7 @@ saphostname="saporacle"
 # Install Kernel packages needed to install Oracle and to have a Graphic interface needed for Oracle Java tools
 YUM_PACKAGES=(
     csh
+    uuidd
     xorg-x11-xauth.x86_64
     xorg-x11-server-utils.x86_64
     dbus-x11.x86_64

@@ -51,6 +51,7 @@ saphostname="sapaas"
 
 # Install Kernel packages needed to install Oracle and to have a Graphic interface needed for Oracle Java tools
 YUM_PACKAGES=(
+    uuidd
     csh
     xorg-x11-xauth.x86_64
     xorg-x11-server-utils.x86_64
