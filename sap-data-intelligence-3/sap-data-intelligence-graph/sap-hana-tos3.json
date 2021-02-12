@@ -1,0 +1,262 @@
+{
+	"properties": {},
+	"description": "",
+	"processes": {
+		"writefile1": {
+			"component": "com.sap.file.write",
+			"metadata": {
+				"label": "Write File",
+				"x": 485.99999809265137,
+				"y": 12,
+				"height": 80,
+				"width": 120,
+				"config": {
+					"connection": {
+						"configurationType": "Connection Management",
+						"connectionID": "amazon_s3"
+					},
+					"pathMode": "Static (from configuration)",
+					"path": "/sample-data/customer-sentiment-output/output.json",
+					"mode": "Overwrite"
+				}
+			}
+		},
+		"graphterminator1": {
+			"component": "com.sap.util.graphTerminator",
+			"metadata": {
+				"label": "Graph Terminator",
+				"x": 670.999997138977,
+				"y": 12,
+				"height": 80,
+				"width": 120,
+				"config": {}
+			}
+		},
+		"hanatableconsumer1": {
+			"component": "com.sap.dh.ds.hanaodbc.table.consumer",
+			"metadata": {
+				"label": "HANA Table Consumer",
+				"x": 17,
+				"y": 12,
+				"height": 80,
+				"width": 120,
+				"extensible": false,
+				"config": {
+					"partitionType": "None",
+					"hanaConnection": {
+						"configurationType": "Configuration Manager",
+						"connectionID": "sap_hana_database"
+					},
+					"adapted_dataset": {
+						"remoteObjectReference": {
+							"connection": {
+								"id": "sap_hana_database",
+								"type": "HANA_DB"
+							},
+							"name": "$TA_SENTIMENTINDX",
+							"remoteObjectType": "TABLE",
+							"qualifiedName": "/SAPA4H/%24TA_SENTIMENTINDX",
+							"nativeQualifiedName": "\"SAPA4H\".\"$TA_SENTIMENTINDX\"",
+							"owner": "SAPA4H"
+						},
+						"schema": {
+							"genericType": "TABLE",
+							"tableBasedRepresentation": {
+								"attributes": [
+									{
+										"name": "REVIEWID",
+										"templateType": "string",
+										"datatype": "STRING",
+										"length": 200,
+										"nativeDatatype": "VARCHAR"
+									},
+									{
+										"name": "TA_RULE",
+										"templateType": "string",
+										"datatype": "STRING",
+										"length": 200,
+										"nativeDatatype": "NVARCHAR"
+									},
+									{
+										"name": "TA_COUNTER",
+										"templateType": "int64",
+										"datatype": "INTEGER",
+										"length": 8,
+										"nativeDatatype": "BIGINT"
+									},
+									{
+										"name": "TA_TOKEN",
+										"templateType": "string",
+										"datatype": "STRING",
+										"length": 5000,
+										"nativeDatatype": "NVARCHAR"
+									},
+									{
+										"name": "TA_LANGUAGE",
+										"templateType": "string",
+										"datatype": "STRING",
+										"length": 2,
+										"nativeDatatype": "NVARCHAR"
+									},
+									{
+										"name": "TA_TYPE",
+										"templateType": "string",
+										"datatype": "STRING",
+										"length": 100,
+										"nativeDatatype": "NVARCHAR"
+									},
+									{
+										"name": "TA_NORMALIZED",
+										"templateType": "string",
+										"datatype": "STRING",
+										"length": 5000,
+										"nativeDatatype": "NVARCHAR"
+									},
+									{
+										"name": "TA_STEM",
+										"templateType": "string",
+										"datatype": "STRING",
+										"length": 5000,
+										"nativeDatatype": "NVARCHAR"
+									},
+									{
+										"name": "TA_PARAGRAPH",
+										"templateType": "int32",
+										"datatype": "INTEGER",
+										"length": 4,
+										"nativeDatatype": "INTEGER"
+									},
+									{
+										"name": "TA_SENTENCE",
+										"templateType": "int32",
+										"datatype": "INTEGER",
+										"length": 4,
+										"nativeDatatype": "INTEGER"
+									},
+									{
+										"name": "TA_CREATED_AT",
+										"templateType": "timestamp",
+										"datatype": "DATETIME",
+										"nativeDatatype": "TIMESTAMP"
+									},
+									{
+										"name": "TA_OFFSET",
+										"templateType": "int64",
+										"datatype": "INTEGER",
+										"length": 8,
+										"nativeDatatype": "BIGINT"
+									},
+									{
+										"name": "TA_PARENT",
+										"templateType": "int64",
+										"datatype": "INTEGER",
+										"length": 8,
+										"nativeDatatype": "BIGINT"
+									}
+								],
+								"uniqueKeys": [
+									{
+										"attributeReferences": [
+											"REVIEWID",
+											"TA_RULE",
+											"TA_COUNTER"
+										]
+									}
+								]
+							}
+						},
+						"capabilities": {
+							"isProfileable": true
+						},
+						"capabilityProperties": [
+							{
+								"name": "isProfileable",
+								"value": "true"
+							}
+						]
+					}
+				}
+			}
+		},
+		"flowagentcsvproducer1": {
+			"component": "com.sap.dh.ds.csv.producer",
+			"metadata": {
+				"label": "Flowagent CSV Producer",
+				"x": 201.99999904632568,
+				"y": 12,
+				"height": 80,
+				"width": 120,
+				"extensible": false,
+				"config": {}
+			}
+		},
+		"tofile1": {
+			"component": "com.sap.file.toFile",
+			"metadata": {
+				"label": "To File",
+				"x": 386.99999809265137,
+				"y": 27,
+				"height": 50,
+				"width": 50,
+				"config": {}
+			}
+		}
+	},
+	"groups": [],
+	"connections": [
+		{
+			"metadata": {
+				"points": "609.9999980926514,43 637.9999976158142,43 637.9999976158142,52 665.999997138977,52"
+			},
+			"src": {
+				"port": "file",
+				"process": "writefile1"
+			},
+			"tgt": {
+				"port": "stop",
+				"process": "graphterminator1"
+			}
+		},
+		{
+			"metadata": {
+				"points": "141,43 168.99999952316284,43 168.99999952316284,52 196.99999904632568,52"
+			},
+			"src": {
+				"port": "outConfig",
+				"process": "hanatableconsumer1"
+			},
+			"tgt": {
+				"port": "inConfig",
+				"process": "flowagentcsvproducer1"
+			}
+		},
+		{
+			"metadata": {
+				"points": "325.9999990463257,34 353.9999985694885,34 353.9999985694885,61 381.99999809265137,61"
+			},
+			"src": {
+				"port": "outContent",
+				"process": "flowagentcsvproducer1"
+			},
+			"tgt": {
+				"port": "in",
+				"process": "tofile1"
+			}
+		},
+		{
+			"metadata": {
+				"points": "440.99999809265137,52 480.99999809265137,52"
+			},
+			"src": {
+				"port": "file",
+				"process": "tofile1"
+			},
+			"tgt": {
+				"port": "file",
+				"process": "writefile1"
+			}
+		}
+	],
+	"inports": {},
+	"outports": {}
+}

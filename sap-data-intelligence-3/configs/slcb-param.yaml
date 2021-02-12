@@ -1,0 +1,174 @@
+
+# Title                         : Kubernetes Namespace
+# Description                   : Specify the Kubernetes namespace in which the actions will be taken.
+# Type                          : string
+# MinLength                     : 1
+# MaxLength                     : 63
+# Pattern                       : ^((([a-z])+|([0-9])+)(-(([a-z])+|([0-9])+))+)$|^(([a-z]|[0-9])*([a-z])+([a-z]|[0-9])*)$
+SLP_NAMESPACE: "sapdi3"
+
+# Title                         : Action Type
+# Description                   : Choose the appropriate option.
+# Type                          : string
+# DefaultVal                    : INSTALL
+# Options
+#  Installation                  : INSTALL
+#  Upgrade                       : UPGRADE
+#  Uninstallation                : UNINSTALL
+SLP_ACTIVITY: "INSTALL"
+
+# Title                         : Installation Type
+# Description                   : Choose one of the installation types.
+# Type                          : string
+# Condition                     : [[ "${SLP_ACTIVITY}" == "INSTALL" ]]
+# DefaultVal                    : advanced
+# Options
+#  Basic Installation            : basic
+#  Advanced Installation         : advanced
+SLP_INSTALL_MODE: "advanced"
+
+# Title                         : Container Registry
+# Description                   : Specify the container registry to push the SAP Data Intelligence images. This container registry will be used by Kubernetes and by SAP Data Intelligence Modeler. The container registry must be accessible from the administrator's workstation including the necessary authentication.
+# Type                          : targetregistry
+# Condition                     : [[ "${SLP_ACTIVITY}" != "UNINSTALL" ]]
+SLP_DOCKER_REGISTRY: "<AWS-account-ID>.dkr.ecr.<AWS-region>.amazonaws.com/sap-di3-v75"
+
+# Title                         : SAP Data Intelligence System Tenant Administrator Password
+# Description                   : Specify a password for the "system" user of "system" tenant.
+# Type                          : string
+# Hidden                        : true
+# Condition                     : [[ "${SLP_ACTIVITY}" != "UNINSTALL" ]]
+# DefaultVal                    : (hidden)
+# MinLength                     : 8
+# MaxLength                     : 255
+# Pattern                       : ^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\.\*+?_])(?!.*[^a-zA-Z0-9!@#\$%\.\*+?_])
+SYSTEM_ADMIN_PASSWORD: "<admin-password>"
+
+# Title                         : SAP Data Intelligence Initial Tenant Name
+# Description                   : Specify a name for the SAP Data Intelligence initial tenant that is going to be created automatically.
+# Type                          : string
+# Condition                     : [[ "${SLP_ACTIVITY}" == "INSTALL" && "${SLP_INSTALL_MODE}" == "advanced" ]]
+# DefaultVal                    : default
+# MinLength                     : 4
+# MaxLength                     : 60
+# Pattern                       : ^[a-z0-9]+(-[a-z0-9]+)*$
+DEFAULT_TENANT_NAME: "slv-default"
+
+# Title                         : SAP Data Intelligence Initial Tenant Administrator Username
+# Description                   : Specify a name for administrator user of "slv-default" tenant.
+# Type                          : string
+# Condition                     : [[ "${SLP_ACTIVITY}" != "UNINSTALL" ]]
+# MinLength                     : 4
+# MaxLength                     : 60
+# Pattern                       : ^[a-z0-9]+(-[a-z0-9]+)*$
+SLP_VORA_ADMIN_USERNAME: "dh-admin"
+
+# Title                         : SAP Data Intelligence Initial Tenant Administrator Password
+# Description                   : Specify a password for "dh-admin" user of "slv-default" tenant.
+# Type                          : string
+# Hidden                        : true
+# Condition                     : [[ "${SLP_ACTIVITY}" != "UNINSTALL" ]]
+# DefaultVal                    : (hidden)
+# MinLength                     : 8
+# MaxLength                     : 255
+# Pattern                       : ^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\.\*+?_])(?!.*[^a-zA-Z0-9!@#\$%\.\*+?_])
+DEFAULT_ADMIN_PASSWORD: "<dh-admin-password>"
+
+# Title                         : Cluster Proxy Settings
+# Description                   : Choose if you want to configure proxy settings. It is necessary when the Kubernetes cluster is running behind a proxy.
+# Type                          : boolean
+# Condition                     : [[ "${SLP_ACTIVITY}" == "INSTALL" && "${SLP_INSTALL_MODE}" == "advanced" ]]
+# DefaultVal                    : false
+# Options
+#  Configure                     : true
+#  Do not configure              : false
+SLP_PROXY_SETTINGS: "false"
+
+# Title                         : Checkpoint Store Configuration
+# Description                   : Choose if you want to use SAP Data Intelligence streaming tables and enable the checkpoint store.
+# Type                          : boolean
+# Condition                     : [[ "${SLP_ACTIVITY}" == "INSTALL" ]]
+# DefaultVal                    : false
+# Options
+#  Do not enable checkpoint store: false
+#  Enable checkpoint store       : true
+SLP_ENABLE_CHECKPOINT_STORE: "false"
+
+# Title                         : Storage Class Configuration
+# Description                   : Choose if you want to configure StorageClasses for ReadWriteOnce PersistentVolumes.
+# Type                          : boolean
+# Condition                     : [[ "${SLP_ACTIVITY}" == "INSTALL" && "${SLP_INSTALL_MODE}" == "advanced" ]]
+# DefaultVal                    : false
+# Options
+#  Do not configure storage classes: true
+#  Configure storage classes     : false
+SLP_CONFIGURE_STORAGE_CLASS: "false"
+
+# Title                         : Docker Container Log Path Configuration
+# Description                   : Choose whether the configuration of your kubernetes cluster requires a custom container log path configuration. This option is only required if the directory /var/lib/docker/containers resides on different mount volumes of the physical cluster nodes than the root directory (e.g. /mnt//docker/containers) which may be the case for on-premise installations. In this case the installation of SAP Data Intelligence Diagnostics with the default container log path setting will fail. You do not need to modify the container log path on standard cloud environments (including SAP Cloud Platform, Amazon Web Services, Google Cloud Platform, and Microsoft Azure).
+# Type                          : boolean
+# Condition                     : [[ "${SLP_ACTIVITY}" == "INSTALL" && "${SLP_INSTALL_MODE}" == "advanced" ]]
+# DefaultVal                    : false
+# Options
+#  Do not configure container log path: false
+#  Configure container log path  : true
+SLP_CONFIGURE_DOCKER_LOG_PATH: "false"
+
+# Title                         : Enable Kaniko Usage
+# Description                   : Choose if you want to enable Kaniko usage. Kaniko is a tool to build container images inside Kubernetes cluster. When kaniko usage is enabled, SAP Data Intelligence Modeler uses it to build images of operators. Otherwise, SAP Data Intelligence Modeler mounts docker socket of the kubernetes nodes to build the images.
+# Type                          : boolean
+# Condition                     : [[ "${SLP_ACTIVITY}" == "UPGRADE" ]] || [[ "${SLP_INSTALL_MODE}" == "advanced" && "${SLP_ACTIVITY}" == "INSTALL" ]]
+# DefaultVal                    : true
+# Options
+#  Enable Kaniko                 : true
+#  Do not enable Kaniko          : false
+SLP_ENABLE_KANIKO: "true"
+
+# Title                         : Container Registry Settings for SAP Data Intelligence Modeler
+# Description                   : Choose if you want to use a different container registry from "eu.gcr.io/sap-p-and-i-iqs-eval/259233" for SAP Data Intelligence Modeler.
+# Type                          : boolean
+# Condition                     : [[ "${SLP_ACTIVITY}" == "UPGRADE" ]] || [[ "${SLP_INSTALL_MODE}" == "advanced" && "${SLP_ACTIVITY}" == "INSTALL" ]]
+# DefaultVal                    : false
+# Options
+#  Use a different registry      : true
+#  Use default registry          : false
+SLP_CONFIGURE_REGISTRY_FOR_VFLOW: "false"
+
+# Title                         : Loading NFS Modules
+# Description                   : Choose if you want to enable loading the kernel modules (nfsd and nfsv4) on all Kubernetes nodes. These modules are necessary for System Management. You can disable if you are certain that these modules (nfsd and nfsv4) are already loaded on all Kubernetes nodes.
+# Type                          : boolean
+# Condition                     : [[ "${SLP_ACTIVITY}" == "INSTALL" && "${SLP_INSTALL_MODE}" == "advanced" ]]
+# DefaultVal                    : true
+# Options
+#  Enable loading NFS modules    : true
+#  Disable loading NFS modules   : false
+SLP_LOAD_NFS_MODULES: "true"
+
+# Title                         : Enable Network Policies
+# Description                   : Choose if you want to enable Network Policies.
+# Type                          : boolean
+# Condition                     : [[ "${SLP_ACTIVITY}" == "INSTALL" && "${SLP_INSTALL_MODE}" == "advanced" ]]
+# DefaultVal                    : false
+# Options
+#  Enable network policies       : true
+#  Disable network policies      : false
+SLP_ENABLE_NETWORK_POLICIES: "false"
+
+# Title                         : Timeout
+# Description                   : Timeout in seconds for DataHub installation. The default duration is enough for most of the environments. Increasing the value is necessary when the network or volume provisioner is so slow that deployments of components fail because of timeouts without any other issues.
+# Type                          : string
+# Condition                     : [[ "${SLP_ACTIVITY}" == "INSTALL" && "${SLP_INSTALL_MODE}" == "advanced" ]]
+# DefaultVal                    : 3600
+# Pattern                       : ^(0|[1-9][0-9]*)$
+SLP_TIMEOUT: "7200"
+
+# Title                         : Additional Installation Parameters
+# Description                   : You can specify additional installation parameters. The parametes are documented in the section "Configuration Parameters for Kubernetes Deployment" in the official SAP Data Intelligence documentation. Use -e flag for each additional parameter that you give and use spaces between them.
+# Type                          : string
+# Condition                     : [[ "${SLP_ACTIVITY}" == "INSTALL" && "${SLP_INSTALL_MODE}" == "advanced" ]]
+# Pattern                       : ^$|^[^']+$
+SLP_EXTRA_PARAMETERS: ""
+
+SLP_BRIDGE_REPOSITORY: "<AWS-account-ID>.dkr.ecr.<AWS-region>.amazonaws.com/sap-di3-v75"
+IMAGES_SAP_SUSER: S00xxxxxxxx
+IMAGES_SAP_SUSER_PASSWORD: "<S-user-password>"

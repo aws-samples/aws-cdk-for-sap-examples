@@ -1,0 +1,77 @@
+
+# Title                         : SLC Bridge Namespace
+# Description                   : Enter the Kubernetes namespace for the SLC Bridge.
+# Type                          : string
+# Pattern                       : ^((([a-z])+|([0-9])+)(-(([a-z])+|([0-9])+))+)$|^(([a-z]|[0-9])*([a-z])+([a-z]|[0-9])*)$
+# Mandatory                     : true
+SLP_NAMESPACE: "sap-slcbridge"
+
+# Title                         : KUBECONFIG
+# Description                   : Enter the path to the "kubectl" configuration file. The configuration information contained in this file will specify the cluster on which you are about to perform the deployment.
+# Type                          : file
+# MinLength                     : 1
+KUBECONFIG: "/root/.kube/config"
+
+# Title                         : Choose whether you want to run the deployment in typical or expert mode
+# Description                   : You can run the deployment either in typical or expert mode:
+# Type                          : string
+# DefaultVal                    : true
+# Options
+#  Typical Mode                  : true
+#  Expert Mode                   : false
+SLP_TYPICALMODE: "false"
+
+# Title                         : Administrator User
+# Description                   : Specify the name of the administrator user for the SLC Bridge Base.
+# Type                          : string
+# Condition                     : {{ not .SLP_UNINSTALL | and (not .SLCB_UPDATE) }}
+# DefaultVal                    : admin
+# MinLength                     : 1
+ADMIN_USER: "admin"
+
+# Title                         : Administrator User Password
+# Description                   : Define the password of the administrator user admin
+# Type                          : string
+# Hidden                        : true
+# Condition                     : {{ not .SLP_UNINSTALL | and (not .SLCB_UPDATE) }}
+# DefaultVal                    : (hidden)
+# MinLength                     : 8
+# ADMIN_PASSWORD: 
+ADMIN_PASSWORD: "<admin-password>"
+
+# Title                         : Service Type of the SLC Bridge Base Service
+# Description                   : In order to access the SLC Bridge Base, the UI Port needs to be exposed. This is accomplished by defining a Kubernetes service.
+# Type                          : string
+# Condition                     : {{ not .SLP_UNINSTALL | and (not .SLCB_UPDATE)}}
+# DefaultVal                    : LoadBalancer
+# Options
+#  Service Type LoadBalancer     : LoadBalancer
+#  Service Type NodePort         : NodePort
+SERVICE_TYPE: "LoadBalancer"
+
+# Title                         : Service Annotation
+# Description                   : You can specify an annotation to add to the "metadata" section of the "LoadBalancer" service.
+# Type                          : string
+# Condition                     : {{ not .SLP_UNINSTALL | and (not .SLCB_UPDATE) | and (eq .SERVICE_TYPE "LoadBalancer") }}
+# Pattern                       : ^|([a-z0-9][a-z0-9-.]*[a-z0-9]: .*)$
+SERVICE_ANNOTATION: "service.beta.kubernetes.io/aws-load-balancer-internal: \"true\""
+
+# Title                         : SLC Bridge Service Port
+# Description                   : Specify the Service Port to connect with the SLC Bridge UI.
+# Type                          : number
+# Condition                     : {{ not .SLP_UNINSTALL | and (not .SLCB_UPDATE) | and (eq .SERVICE_TYPE "LoadBalancer") }}
+# DefaultVal                    : 9000
+# MinValue                      : 1024
+# MaxValue                      : 65535
+SERVICE_PORT: "9000"
+
+# Title                         : Proxy Settings
+# Description                   : Do you want to configure Proxy Settings for the Pods running in the cluster?
+# Type                          : boolean
+# Condition                     : {{ not .SLP_UNINSTALL | and (not .SLCB_UPDATE) }}
+# DefaultVal                    : false
+SET_PROXY: "false"
+
+SLP_BRIDGE_REPOSITORY: "<AWS-account-ID>.dkr.ecr.<AWS-region>.amazonaws.com/sap-di3-v75"
+IMAGES_SAP_SUSER: S00xxxxxxxx
+IMAGES_SAP_SUSER_PASSWORD: "<S-user-password>"

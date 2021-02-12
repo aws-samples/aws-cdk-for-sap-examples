@@ -1,0 +1,236 @@
+{
+	"properties": {},
+	"description": "",
+	"processes": {
+		"readfile1": {
+			"component": "com.sap.file.read",
+			"metadata": {
+				"label": "Read File",
+				"x": 17,
+				"y": 57,
+				"height": 80,
+				"width": 120,
+				"config": {
+					"mode": "Once",
+					"connection": {
+						"configurationType": "Connection Management",
+						"connectionID": "amazon_s3"
+					},
+					"path": "/sample-data/customer-sentiment/sample_us.tsv"
+				}
+			}
+		},
+		"wiretap1": {
+			"component": "com.sap.util.wiretap",
+			"metadata": {
+				"label": "Wiretap",
+				"x": 386.99999809265137,
+				"y": 102,
+				"height": 80,
+				"width": 120,
+				"ui": "dynpath",
+				"config": {}
+			}
+		},
+		"12multiplexer1": {
+			"component": "com.sap.system.multiplexer.1-2",
+			"metadata": {
+				"label": "1:2 Multiplexer",
+				"x": 201.99999904632568,
+				"y": 57,
+				"height": 80,
+				"width": 120,
+				"extensible": true,
+				"config": {}
+			}
+		},
+		"saphanaclient1": {
+			"component": "com.sap.hana.client2",
+			"metadata": {
+				"label": "SAP HANA Client",
+				"x": 571.999997138977,
+				"y": 57,
+				"height": 80,
+				"width": 120,
+				"config": {
+					"connection": {
+						"configurationType": "Configuration Manager",
+						"connectionID": "sap_hana_database"
+					},
+					"tableColumns": [
+						{
+							"name": "marketplace",
+							"type": "VARCHAR",
+							"size": 5
+						},
+						{
+							"name": "customerid",
+							"type": "VARCHAR",
+							"size": 200
+						},
+						{
+							"name": "reviewid",
+							"type": "VARCHAR",
+							"size": 200
+						},
+						{
+							"name": "productid",
+							"type": "VARCHAR",
+							"size": 200
+						},
+						{
+							"name": "productparent",
+							"type": "VARCHAR",
+							"size": 200
+						},
+						{
+							"name": "producttitle",
+							"type": "VARCHAR",
+							"size": 1000
+						},
+						{
+							"name": "productcategory",
+							"type": "VARCHAR",
+							"size": 1000
+						},
+						{
+							"name": "starrating",
+							"type": "INTEGER"
+						},
+						{
+							"name": "helpfulvotes",
+							"type": "INTEGER"
+						},
+						{
+							"name": "totalvotes",
+							"type": "INTEGER"
+						},
+						{
+							"name": "vine",
+							"type": "VARCHAR",
+							"size": 1
+						},
+						{
+							"name": "verifiedpurchase",
+							"type": "VARCHAR",
+							"size": 1
+						},
+						{
+							"name": "reviewheadline",
+							"type": "VARCHAR",
+							"size": 1000
+						},
+						{
+							"name": "reviewbody",
+							"type": "VARCHAR",
+							"size": 5000
+						},
+						{
+							"name": "reviewdate",
+							"type": "VARCHAR",
+							"size": 10
+						}
+					],
+					"tableName": "SAPA4H.CUSTOMER_REVIEWS",
+					"initTable": "Create",
+					"terminateOnError": false,
+					"csvHeader": "Ignore",
+					"csvComma": "\\t",
+					"tableType": "Column"
+				}
+			}
+		},
+		"fromfile1": {
+			"component": "com.sap.file.fromFile",
+			"metadata": {
+				"label": "From File",
+				"x": 421.49999809265137,
+				"y": 12,
+				"height": 50,
+				"width": 50,
+				"config": {}
+			}
+		},
+		"graphterminator1": {
+			"component": "com.sap.util.graphTerminator",
+			"metadata": {
+				"label": "Graph Terminator",
+				"x": 740.999997138977,
+				"y": 57,
+				"height": 80,
+				"width": 120,
+				"config": {}
+			}
+		}
+	},
+	"groups": [],
+	"connections": [
+		{
+			"metadata": {
+				"points": "141,88 168.99999952316284,88 168.99999952316284,97 196.99999904632568,97"
+			},
+			"src": {
+				"port": "file",
+				"process": "readfile1"
+			},
+			"tgt": {
+				"port": "in1",
+				"process": "12multiplexer1"
+			}
+		},
+		{
+			"metadata": {
+				"points": "325.9999990463257,106 353.9999985694885,106 353.9999985694885,142 381.99999809265137,142"
+			},
+			"src": {
+				"port": "out2",
+				"process": "12multiplexer1"
+			},
+			"tgt": {
+				"port": "in",
+				"process": "wiretap1"
+			}
+		},
+		{
+			"metadata": {
+				"points": "325.9999990463257,88 353.9999985694885,88 353.9999985694885,37 416.49999809265137,37"
+			},
+			"src": {
+				"port": "out1",
+				"process": "12multiplexer1"
+			},
+			"tgt": {
+				"port": "file",
+				"process": "fromfile1"
+			}
+		},
+		{
+			"metadata": {
+				"points": "475.49999809265137,46 538.9999976158142,46 538.9999976158142,106 566.999997138977,106"
+			},
+			"src": {
+				"port": "message",
+				"process": "fromfile1"
+			},
+			"tgt": {
+				"port": "data",
+				"process": "saphanaclient1"
+			}
+		},
+		{
+			"metadata": {
+				"points": "695.999997138977,97 735.999997138977,97"
+			},
+			"src": {
+				"port": "result",
+				"process": "saphanaclient1"
+			},
+			"tgt": {
+				"port": "stop",
+				"process": "graphterminator1"
+			}
+		}
+	],
+	"inports": {},
+	"outports": {}
+}

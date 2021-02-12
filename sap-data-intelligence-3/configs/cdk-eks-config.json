@@ -1,0 +1,4 @@
+{  
+    "sshKey" : "SSH Key name in region for EKS nodes",
+    "s3Bucket" : "S3 Bucket Name"
+}
