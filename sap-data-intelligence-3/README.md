@@ -1,7 +1,7 @@
 # CDK TypeScript project for SAP Data Intelligence
 
 Deployment of SAP Data Intelligence using AWS CDK. 
-For more information see [SAP on AWS blog](https://aws.amazon.com/blogs/awsforsap/xxxxx
+For more information see [SAP on AWS blog](https://aws.amazon.com/blogs/awsforsap/voice-of-customer-analytics-using-sap-data-intelligence-on-aws)
 
 ## Architecture of the deployment
 1. AWS CDK will create new VPC (CIDR 10.20.0.0/16) with two private and public subnets (sapdi-priate and sapdi-public). If you want to use different CIDR please modify the cdk-vpc stack accordingly. If you want use existing VPC please follow section "Deployment in existing VPC)
