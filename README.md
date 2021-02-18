@@ -7,7 +7,7 @@ This repository contains a set of example projects for SAP applications. All exa
 2. SAP Commerce 
 3. SAP Netweaver 7.5 on Oracle database
 4. SAP Netweaver 7.5 on Oracle database (Additional Application Servers)
-4. SAP Data Intelligence
+5. SAP Data Intelligence 3
 
 ## Security
 
