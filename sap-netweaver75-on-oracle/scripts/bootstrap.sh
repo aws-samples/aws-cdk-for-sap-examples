@@ -136,7 +136,6 @@ YUM_PACKAGES=(
     unixODBC
     unixODBC-devel
     java
-    compat-libstdc++-33
     zip
 )
 
